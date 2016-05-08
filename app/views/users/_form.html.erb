@@ -1,0 +1,34 @@
+<%= form_for @user, html: {multipart: true} do |f| %>
+
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.label :email %>
+  <%= f.email_field :email, :required => true, :autofocus => true %>
+
+  <%= f.label :first, 'First name' %>
+  <%= f.text_field :first, :required => true %>
+
+  <%= f.label :last, 'Surname' %>
+  <%= f.text_field :last, :required => true %>
+
+  <%= f.label :password %><br>
+  <%= f.password_field :password, :required => (true unless @current_user.present?) %>
+
+  <%= f.label :password_confirmation %><br>
+  <%= f.password_field :password_confirmation, :required => (true unless @current_user.present?) %>
+
+  <%= f.label :image, 'Upload profile picture' %>
+  <%= f.file_field :image %>
+
+  <%= f.submit %>
+<% end %>

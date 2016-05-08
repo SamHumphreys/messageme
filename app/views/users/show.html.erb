@@ -1,0 +1,20 @@
+<% if @current_user == @user %>
+  <h1>Hi <%= @user.first %>. Here are your details.</h1>
+  <%= image_tag @user.image, :class => 'profile-pic' %>
+  <p>Name: <%= @user.first + ' ' + @user.last %></p>
+  <p>Email: <%= @user.email %></p>
+  <% if @current_user.admin? %>
+    <p>You are a site admin... with great power comes great responsibility.</p>
+  <% end %>
+
+
+
+
+
+
+<% else %>
+  <%= image_tag @user.image %>
+
+<% end %>
+
+<%= @user.first + ' ' + @initial %>

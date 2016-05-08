@@ -1,0 +1,13 @@
+<h1>All users</h1>
+
+<% @users.each do |user| %>
+  <p>User ID <%= user.id %>,
+    <%= user.first + ' ' + user.last %>
+    <%= link_to 'Show', user  %>
+    <%= link_to 'Edit', edit_user_path(user) %>
+    <%= link_to 'Destroy', user, method: :delete, data: {confirm: "Are you sure?"} %>
+  </p>
+
+
+
+<% end %>
