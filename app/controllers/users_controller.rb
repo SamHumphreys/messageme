@@ -50,7 +50,7 @@ class UsersController < ApplicationController
   end
 
   def authorise
-    redirect_to root_path unless (@current_user.present? && @current_user.is_admin?)
+    redirect_to root_path unless (@current_user.present? && @current_user.admin?)
   end
 
 end
