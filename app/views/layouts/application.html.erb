@@ -8,7 +8,14 @@
 </head>
 <body>
 
-<%= yield %>
+
+  <% if flash[:error].present? %>
+    <h2 class="error">
+      <%= flash[:error] %>
+    </h2>
+  <% end %>
+
+  <%= yield %>
 
 </body>
 </html>

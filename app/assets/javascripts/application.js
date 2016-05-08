@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require_tree .
+//= require libs/underscore.js
 //= require websocket_rails/main
-
+//= require_tree .
