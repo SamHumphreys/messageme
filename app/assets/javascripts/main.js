@@ -1,18 +1,24 @@
+var constants = {
+  userID: 0
+}
+
+
 $(document).ready(function () {
 
   var dispatcher = new WebSocketRails(window.location.host + '/websocket');
-
   dispatcher.on_open = function (data) {
     console.log('Connection established', data);
-    dispatcher.trigger('hello', 'hi there!');
+    dispatcher.trigger('login', 'I am logged in meow');
   };
 
-  var channel = dispatcher.subscribe('pictures');
-  channel.bind('picture', function(image){
-    console.log(image);
-    // var $piccy = $('<img>').attr('src', image)
-    // console.log($piccy);
-    // $('body').append($piccy);
+  var channel = dispatcher.subscribe('user_id');
+  channel.bind('user', function(id){
+    constants.userID = id;
+  });
+
+  var channel = dispatcher.subscribe('messages');
+  channel.bind('get_all_messages', function(messages) {
+    console.log(messages);
   });
 
 });

@@ -1,8 +1,9 @@
 WebsocketRails::EventMap.describe do
 
-  subscribe :hello, 'ws#hello'
+  subscribe :login, 'ws#get_id'
   subscribe :client_disconnected, 'ws#goodbye'
   subscribe :connection_closed, 'ws#goodbye'
+
 
 
 end
