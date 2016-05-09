@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :authorise, :only => [:index]
-  before_action :logged_in, :only => [:show, :edit, :update, :destroy]
+  # before_action :authorise, :only => [:index]
+  # before_action :logged_in, :only => [:show, :edit, :update, :destroy]
 
   def new
     @user = User.new
