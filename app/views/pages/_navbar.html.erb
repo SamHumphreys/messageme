@@ -5,11 +5,8 @@
   </div>
 <% else %>
   <div class="navbar">
-
-    <%= button_to 'Manage contacts', contacts_path, method: :get, :class => 'button button-3 contacts' %>
-
-    <%= button_to 'Messages', messages_path, method: :get, :class => 'button button-3 messages'  %>
-
+    <%= button_to 'Messages', messages_path, method: :get, :class => 'button button-3 messages' %>
+    <%= button_to 'Your details', edit_user_path(@current_user.id), method: :get, :class => 'button button-3 profile'  %>
     <%= button_to 'Log out', login_path, method: :delete, :class => 'button button-3 log-out' %>
   </div>
 <% end %>

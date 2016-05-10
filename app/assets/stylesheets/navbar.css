@@ -29,11 +29,11 @@
   width: 313px;
 }
 
-.navbar .sign-up, .contacts {
+.navbar .sign-up, .messages {
   left: 0;
 }
 
-.navbar .messages {
+.navbar .profile {
   left: 323px;
 }
 
@@ -47,7 +47,7 @@
   box-shadow: 2px 2px 2px;
 }
 
-.navbar .sign-up:hover, .contacts:hover {
+.navbar .sign-up:hover, .messages:hover {
   left: 1px;
 }
 
@@ -55,6 +55,6 @@
   right: -1px;
 }
 
-.navbar .messages:hover {
+.navbar .profile:hover {
   left: 324px;
 }
