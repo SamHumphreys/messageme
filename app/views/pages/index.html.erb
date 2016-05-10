@@ -10,25 +10,21 @@
       </div>
     </div>
     <div class="right">
-      <%= image_tag('wolf.png') %>
+      <%= image_tag 'wolf.png', :class => 'landing-image' %>
     </div>
   </div>
 
   <% if !@current_user.present? %>
     <div class="navbar">
-      <%= button_to 'Sign up!', signup_path, method: :get, :class => 'button button-2 sign-up' %>
+      <%= button_to 'Sign up', signup_path, method: :get, :class => 'button button-2 sign-up' %>
       <%= button_to 'Log in', login_path, method: :get, :class => 'button button-2 log-in' %>
     </div>
   <% else %>
     <div class="navbar">
 
-      <a class="button button-3 user-search">
-        <p>Manage contacts</p>
-      </a>
+      <%= button_to 'Manage contacts', contacts_path, method: :get, :class => 'button button-3 contacts' %>
 
-      <a class="button button-3 messages">
-        <p>Messages</p>
-      </a>
+      <%= button_to 'Messages', messages_path, method: :get, :class => 'button button-3 messages'  %>
 
       <%= button_to 'Log out', login_path, method: :delete, :class => 'button button-3 log-out' %>
 

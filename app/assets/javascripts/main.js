@@ -14,6 +14,7 @@ $(document).ready(function () {
   var channel = dispatcher.subscribe('user_id');
   channel.bind('user', function(id){
     constants.userID = id;
+    console.log(constants.userID);
   });
 
   var channel = dispatcher.subscribe('messages');

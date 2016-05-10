@@ -29,7 +29,7 @@
   width: 313px;
 }
 
-.navbar .sign-up,.user-search {
+.navbar .sign-up, .contacts {
   left: 0;
 }
 
@@ -47,7 +47,7 @@
   box-shadow: 2px 2px 2px;
 }
 
-.navbar .sign-up:hover, .user-search:hover {
+.navbar .sign-up:hover, .contacts:hover {
   left: 1px;
 }
 

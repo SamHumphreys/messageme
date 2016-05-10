@@ -34,10 +34,46 @@
   height: 297px;
 }
 
+.title .right .landing-image {
+  height: 297px;
+}
+
 .title .left * p {
   margin: 0;
 }
 
 .title .left .top p {
   margin: 5px 0 0 15px;
+}
+
+
+
+.banner {
+  margin: 0 auto;
+  background: #beeeef;
+  display: block;
+  margin-top: 2em;
+  box-shadow: 4px 4px 4px 0;
+  border-radius: 5px;
+}
+
+.banner .left {
+  width: 755px;
+  font-family: lobster;
+  text-align: center;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 6em;
+}
+
+.banner .left p {
+  margin: 0;
+}
+
+.banner .right {
+  display: inline-block;
+}
+
+.banner .right .banner-image {
+  height: 120px;
 }

@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     if params[:user]['image'].present?
       req = Cloudinary::Uploader.upload(params[:user]['image'])
       @user = User.new(user_params)
-      @user.udpate :image => req['url']
+      @user.update :image => req['url']
     else
       @user = User.new(user_params)
       @user.update :image => 'http://www.priorlakeassociation.org/wp-content/uploads/2011/06/blank-profile.png'
