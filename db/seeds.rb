@@ -21,3 +21,8 @@ m1.users << u1 << u2
 m2.users << u1 << u4
 m3.users << u2 << u4
 m4.users << u2 << u1
+
+m1.update :creator => u1.id
+m2.update :creator => u1.id
+m3.update :creator => u2.id
+m4.update :creator => u2.id

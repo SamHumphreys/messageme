@@ -5,13 +5,16 @@ class WsController < WebsocketRails::BaseController
   def get_id
     if @current_user.present?
       WebsocketRails[:user_id].trigger(:user, @current_user.id)
-      messages(@current_user.id)
+      WebsocketRails.users[@current_user.id] = connection
+      messages(@current_user)
     end
   end
 
-  def messages(user_id)
-    messages = User.find(user_id).messages.uniq
-    WebsocketRails[:messages].trigger(:get_all_messages, messages)
+  def messages(user)
+    messages = User.find(user.id).messages.uniq
+    # send_message :messages, messages
+    # binding.pry
+    WebsocketRails.users[user.id].send_message('messages', messages)
   end
 
   def goodbye

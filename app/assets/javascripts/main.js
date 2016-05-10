@@ -1,5 +1,6 @@
 var constants = {
-  userID: 0
+  userID: 0,
+  connection: ''
 }
 
 
@@ -7,7 +8,8 @@ $(document).ready(function () {
 
   var dispatcher = new WebSocketRails(window.location.host + '/websocket');
   dispatcher.on_open = function (data) {
-    console.log('Connection established', data);
+    constants.connection = data.connection_id;
+    console.log(constants.connection);
     dispatcher.trigger('login', 'I am logged in meow');
   };
 
@@ -17,8 +19,14 @@ $(document).ready(function () {
     console.log(constants.userID);
   });
 
-  var channel = dispatcher.subscribe('messages');
-  channel.bind('get_all_messages', function(messages) {
+  // var channel = dispatcher.subscribe('messages');
+  // channel.bind('get_all_messages', function(messages) {
+  //   _.each(messages, function (message) {
+  //     console.log(message);
+  //   });
+  // });
+
+  dispatcher.bind('messages', function (messages) {
     _.each(messages, function (message) {
       console.log(message);
     });
