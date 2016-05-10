@@ -19,7 +19,9 @@ $(document).ready(function () {
 
   var channel = dispatcher.subscribe('messages');
   channel.bind('get_all_messages', function(messages) {
-    console.log(messages);
+    _.each(messages, function (message) {
+      console.log(message);
+    });
   });
 
 });
