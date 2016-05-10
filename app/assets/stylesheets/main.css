@@ -1,57 +1,11 @@
-@import url(https://fonts.googleapis.com/css?family=Lobster);
+body {
+  background-color: #dedede;
+}
 
 .container {
   max-width: 960px;
   margin: 0 auto;
-  background: gainsboro;
 }
-
-nav {
-  display: none;
-}
-
-.title {
-  margin-top: 4em;
-  background: #BEEEEF;
-  width: 100%;
-  height: 300px;
-  display: block;
-}
-
-.title>.left {
-  font-family: Lobster;
-  vertical-align: top;
-  display: inline-block;
-  width: 70%;
-  height: 297px;
-}
-
-.title>.left>.top {
-  font-size: 2em;
-}
-
-.title>.left>.bottom {
-  text-align: center;
-  font-size: 12em;
-}
-
-.title>.right {
-  vertical-align: top;
-  display: inline-block;
-  width: 29%;
-  height: 297px;
-}
-
-.title>.left>*>p {
-  margin: 0;
-}
-
-.title>.left>.top>p {
-  margin: 5px 0 0 15px;
-}
-
-
-
 
 .profile-pic {
   max-width: 300px;

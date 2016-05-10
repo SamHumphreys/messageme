@@ -1,0 +1,60 @@
+.navbar {
+  position: relative;
+  margin-top: 10px;
+  width: 100%;
+  display: block;
+}
+
+.navbar .button {
+  text-align: center;
+  position: absolute;
+  display: inline-block;
+  background: #beeeef;
+  border-radius: 5px;
+  box-shadow: 4px 4px 4px;
+  height: 60px;
+  font-size: 2em;
+  border: 0;
+}
+
+.navbar .button p {
+  margin: 10px auto;
+}
+
+.navbar .button-2 {
+  width: 49.5%;
+}
+
+.navbar .button-3 {
+  width: 313px;
+}
+
+.navbar .sign-up,.user-search {
+  left: 0;
+}
+
+.navbar .messages {
+  left: 323px;
+}
+
+.navbar .log-out,.log-in {
+  right: 0;
+}
+
+.navbar .button:hover {
+  cursor: pointer;
+  top: 1px;
+  box-shadow: 2px 2px 2px;
+}
+
+.navbar .sign-up:hover, .user-search:hover {
+  left: 1px;
+}
+
+.navbar .log-in:hover, .log-out:hover {
+  right: -1px;
+}
+
+.navbar .messages:hover {
+  left: 324px;
+}
