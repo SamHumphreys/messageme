@@ -1,28 +1,32 @@
-var constants = {
+var msgVars = {
   userID: 0,
   connection: '',
-  chatFocus: 0
+  chatFocus: 0,
+  messages: []
 }
 
 $(document).ready(function () {
+
+  //creates a websocket connection
   var dispatcher = new WebSocketRails(window.location.host + '/websocket');
   dispatcher.on_open = function (data) {
-    constants.connection = data.connection_id;
+    msgVars.connection = data.connection_id;
     dispatcher.trigger('login', 'I am logged in meow');
   };
 
+  //gets own userID on page refresh
   var channel = dispatcher.subscribe('user_id');
   channel.bind('user', function(id){
-    constants.userID = id;
-    console.log(constants.userID);
+    msgVars.userID = id;
   });
 
+  //receives all messages on page reset
   dispatcher.bind('messages', function (messages) {
-    _.each(messages, function (message) {
-      console.log(message);
-    });
+    msgVars.messages = messages;
+    console.log(msgVars.messages);
   });
 
+  //gets all other users and adds them to the contacts list
   dispatcher.bind('users', function (users) {
     _.each(users, function (user) {
       var $chatHead = $('<div/>').addClass('chat-head').attr('data', user.id);
@@ -32,12 +36,16 @@ $(document).ready(function () {
                                     }).appendTo($chatInner);
       var $chatName = $('<p/>').text(user.name).addClass('chat-name').appendTo($chatInner);
       $('.contacts').append($chatHead);
-      addChatHeadListener(this);
     });
+    clickListen.chatHeadListener();
   });
 
-  var addChatHeadListener = function (data) {
-    console.log(data);
+  var clickListen = {
+    chatHeadListener: function () {
+      $('.chat-head').on('click', function () {
+        msgVars.chatFocus = $(this).attr('data');
+        console.log(msgVars.chatFocus);
+      });
+    }
   };
-
 });
