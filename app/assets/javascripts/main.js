@@ -1,33 +1,16 @@
-var constants = {
-  userID: 0,
-  connection: ''
-}
-
-
 $(document).ready(function () {
 
-  var dispatcher = new WebSocketRails(window.location.host + '/websocket');
-  dispatcher.on_open = function (data) {
-    constants.connection = data.connection_id;
-    dispatcher.trigger('login', 'I am logged in meow');
+  if ($('.messages-content').length > 0) {
+    resizeMessages();
   };
 
-  var channel = dispatcher.subscribe('user_id');
-  channel.bind('user', function(id){
-    constants.userID = id;
-    console.log(constants.userID);
-  });
-
-  dispatcher.bind('messages', function (messages) {
-    _.each(messages, function (message) {
-      console.log(message);
-    });
-  });
-
-  dispatcher.bind('users', function (users) {
-    _.each(users, function (user) {
-      console.log(user);
-    });
-  });
-
 });
+
+$(window).on('resize', function () {
+  resizeMessages();
+});
+
+var resizeMessages = function () {
+  var msgsHeight = window.innerHeight - 268;
+  $('.messages-content').height(msgsHeight)
+};

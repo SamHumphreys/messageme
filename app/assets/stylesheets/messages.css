@@ -1,3 +1,53 @@
 .messages-content {
+  background: #beeeef;
+  height: 300px;
+  margin-top: 10px;
+  border-radius: 5px;
+  box-shadow: 4px 4px 4px;
+  position: relative;
+  padding: 5px;
+}
+
+.contacts {
+  display: inline-block;
+  height: 100%;
+  width: 30%;
+  background: red;
+  overflow: scroll;
+}
+
+.chat-head {
+  height: 60px;
+  margin-bottom: 5px;
+  width: 100%;
   background: blue;
+  border-radius: 5px 0 0 5px;
+}
+
+.chat-inner {
+  margin: 0;
+}
+
+.chat-img {
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: top;
+  height: 50px;
+  width: 50px;
+  margin: 5px;
+}
+
+.chat-name {
+  display: inline-block;
+  font-size: 1.5em;
+  margin-top: 16px;
+  vertical-align: top;
+}
+
+
+.message-display {
+  display: inline-block;
+  width: 69%;
+  height: 100%;
+  background: green;
 }

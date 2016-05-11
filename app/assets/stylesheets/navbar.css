@@ -2,6 +2,7 @@
   position: relative;
   margin-top: 10px;
   width: 100%;
+  height: 60px;
   display: block;
 }
 
@@ -26,7 +27,8 @@
 }
 
 .navbar .button-3 {
-  width: 313px;
+  /*width: 313px;*/
+  width: 32.604%;
 }
 
 .navbar .sign-up, .messages {
