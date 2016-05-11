@@ -31,6 +31,7 @@ $(document).ready(function () {
   var listen_for_messages = function () {
     var listen_channel = dispatcher.subscribe(msgVars.userID.toString());
     listen_channel.bind('msg_update', function (msg) {
+      console.log('new update');
       msgVars.messages.push(msg);
       displayMessages(msgVars.messages);
     });
