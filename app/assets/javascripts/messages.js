@@ -18,7 +18,23 @@ $(document).ready(function () {
   var channel = dispatcher.subscribe('user_id');
   channel.bind('user', function(id){
     msgVars.userID = id;
+    console.log(id);
+    listen_for_messages();
   });
+
+  //send a message to the database
+  var sendMessage = function (message) {
+    dispatcher.trigger('new_message', message);
+  };
+
+  //listen to new messages sent to your user ID when the database updates
+  var listen_for_messages = function () {
+    var listen_channel = dispatcher.subscribe(msgVars.userID.toString());
+    listen_channel.bind('msg_update', function (msg) {
+      msgVars.messages.push(msg);
+      displayMessages(msgVars.messages);
+    });
+  };
 
   //receives all messages on page reset
   dispatcher.bind('messages', function (messages) {
@@ -29,48 +45,68 @@ $(document).ready(function () {
   dispatcher.bind('users', function (users) {
     displayContacts(users);
   });
+
+
+  var displayContacts = function (users) {
+    _.each(users, function (user) {
+      var $chatHead = $('<div/>').addClass('chat-head').attr('data', user.id);
+      var $chatInner = $('<p/>').addClass('chat-inner').appendTo($chatHead);
+      var $chatImg = $('<img>').attr({src: user.image,
+                                      class: 'chat-img'
+                                    }).appendTo($chatInner);
+      var $chatName = $('<p/>').text(user.name).addClass('chat-name').appendTo($chatInner);
+      $('.contacts').append($chatHead);
+    });
+    clickListen.chatHeadListener();
+    clickListen.sendMessageListener();
+  };
+
+  var clickListen = {
+    chatHeadListener: function () {
+      $('.chat-head').on('click', function () {
+        msgVars.chatFocus = Number($(this).attr('data'));
+        filterMessages(msgVars.messages, msgVars.chatFocus);
+      });
+    },
+    sendMessageListener: function () {
+      $('.send-message').on('click', function () {
+        var msgText = $('#new-message').val();
+        if (msgVars.chatFocus !== 0 && msgText !== '') {
+          var messageToSend = {
+            user_id: msgVars.userID,
+            target: msgVars.chatFocus,
+            format: 'text',
+            content: msgText,
+            seen: false
+          };
+          sendMessage(messageToSend);
+        };
+      });
+    }
+  };
+
+  //creates a list of messages to or from the clicked on chat head and passes the list on to displayMessages
+  var filterMessages = function (messages, convoPal) {
+    var relevantMessages = _.filter(messages, function(msg) {
+      return (msg.user_id === convoPal) || (msg.target === convoPal)
+    });
+    displayMessages(relevantMessages);
+  };
+
+  //works out whether the messages are incoming or outgoing and displays them on the messages-show div
+  var displayMessages = function (messages) {
+      $('.messages-show').html('');
+      _.each(messages, function (msg) {
+        var $messageContent = $('<p/>').addClass('message-content').text(msg.content);
+        var $messageLine = $('<div/>').addClass('message-line').append($messageContent);
+        if (msg.user_id === msgVars.userID) {   //ie, is a sent message
+          $messageContent.addClass('msg-outgoing');
+        } else {
+          $messageContent.addClass('msg-incoming');
+        };
+        $('.messages-show').append($messageLine);
+      });
+      $('.messages-show').scrollTop($('.messages-show')[0].scrollHeight);
+  };
+
 });
-
-var displayContacts = function (users) {
-  _.each(users, function (user) {
-    var $chatHead = $('<div/>').addClass('chat-head').attr('data', user.id);
-    var $chatInner = $('<p/>').addClass('chat-inner').appendTo($chatHead);
-    var $chatImg = $('<img>').attr({src: user.image,
-                                    class: 'chat-img'
-                                  }).appendTo($chatInner);
-    var $chatName = $('<p/>').text(user.name).addClass('chat-name').appendTo($chatInner);
-    $('.contacts').append($chatHead);
-  });
-  clickListen.chatHeadListener();
-};
-
-var clickListen = {
-  chatHeadListener: function () {
-    $('.chat-head').on('click', function () {
-      msgVars.chatFocus = Number($(this).attr('data'));
-      filterMessages(msgVars.messages, msgVars.chatFocus);
-    });
-  }
-};
-
-//creates a list of messages to or from the clicked on chat head and passes the list on to displayMessages
-var filterMessages = function (messages, convoPal) {
-  var relevantMessages = _.filter(messages, function(msg) {
-    return (msg.user_id === convoPal) || (msg.target === convoPal)
-  });
-  displayMessages(relevantMessages);
-};
-
-//works out whether the messages are incoming or outgoing and displays them on the messages-show div
-var displayMessages = function (messages) {
-    $('.messages-show').html('');
-    _.each(messages, function (msg) {
-      var $msgToShow = $('<div/>').html('<p>'+msg.content+'</p>');
-      if (msg.user_id === msgVars.userID) {   //ie, is a sent message
-        $msgToShow.addClass('msg-outgoing');
-      } else {
-        $msgToShow.addClass('msg-incoming');
-      };
-      $('.messages-show').append($msgToShow);
-    });
-};

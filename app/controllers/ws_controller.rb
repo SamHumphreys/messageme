@@ -2,7 +2,7 @@ class WsController < WebsocketRails::BaseController
 
   before_action :fetch_user
 
-  def get_id
+  def inital_transmit
     if @current_user.present?
       WebsocketRails[:user_id].trigger(:user, @current_user.id)
       WebsocketRails.users[@current_user.id] = connection
@@ -34,6 +34,16 @@ class WsController < WebsocketRails::BaseController
       end
     end
     WebsocketRails.users[user.id].send_message('users', other_users)
+  end
+
+  def create_message
+    @new_msg = Message.create message
+    if @new_msg.save
+      sender = @new_msg.user_id.to_s
+      receiver = @new_msg.target.to_s
+      WebsocketRails[sender].trigger(:msg_update, @new_msg)
+      WebsocketRails[receiver].trigger(:msg_update, @new_msg)
+    end
   end
 
   def goodbye
