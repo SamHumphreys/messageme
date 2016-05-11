@@ -4,12 +4,21 @@
 
   <div class="messages-content">
     <div class="contacts"></div>
-    <div class="message-display">
-
+    <div class="messages-box">
+      <div class="messages-show"></div>
 
       <div class="message-input">
-        <div class="input-box"></div>
-        <div class="message-buttons"></div>
+        <div class="input-box">
+          <%= text_area_tag 'new-message' %>
+        </div>
+        <div class="message-buttons">
+          <div class="message-button send-message">
+            <p>Send Message</p>
+          </div>
+          <div class="message-button upload-image">
+            <p>Send Image</p>
+          </div>
+        </div>
       </div>
     </div>
 

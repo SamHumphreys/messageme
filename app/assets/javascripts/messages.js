@@ -22,30 +22,55 @@ $(document).ready(function () {
 
   //receives all messages on page reset
   dispatcher.bind('messages', function (messages) {
-    msgVars.messages = messages;
-    console.log(msgVars.messages);
+    msgVars.messages = _.sortBy(messages, 'id');
   });
 
-  //gets all other users and adds them to the contacts list
+  //gets all other users and creates a contacts list
   dispatcher.bind('users', function (users) {
-    _.each(users, function (user) {
-      var $chatHead = $('<div/>').addClass('chat-head').attr('data', user.id);
-      var $chatInner = $('<p/>').addClass('chat-inner').appendTo($chatHead);
-      var $chatImg = $('<img>').attr({src: user.image,
-                                      class: 'chat-img'
-                                    }).appendTo($chatInner);
-      var $chatName = $('<p/>').text(user.name).addClass('chat-name').appendTo($chatInner);
-      $('.contacts').append($chatHead);
-    });
-    clickListen.chatHeadListener();
+    displayContacts(users);
   });
-
-  var clickListen = {
-    chatHeadListener: function () {
-      $('.chat-head').on('click', function () {
-        msgVars.chatFocus = $(this).attr('data');
-        console.log(msgVars.chatFocus);
-      });
-    }
-  };
 });
+
+var displayContacts = function (users) {
+  _.each(users, function (user) {
+    var $chatHead = $('<div/>').addClass('chat-head').attr('data', user.id);
+    var $chatInner = $('<p/>').addClass('chat-inner').appendTo($chatHead);
+    var $chatImg = $('<img>').attr({src: user.image,
+                                    class: 'chat-img'
+                                  }).appendTo($chatInner);
+    var $chatName = $('<p/>').text(user.name).addClass('chat-name').appendTo($chatInner);
+    $('.contacts').append($chatHead);
+  });
+  clickListen.chatHeadListener();
+};
+
+var clickListen = {
+  chatHeadListener: function () {
+    $('.chat-head').on('click', function () {
+      msgVars.chatFocus = Number($(this).attr('data'));
+      filterMessages(msgVars.messages, msgVars.chatFocus);
+    });
+  }
+};
+
+//creates a list of messages to or from the clicked on chat head and passes the list on to displayMessages
+var filterMessages = function (messages, convoPal) {
+  var relevantMessages = _.filter(messages, function(msg) {
+    return (msg.user_id === convoPal) || (msg.target === convoPal)
+  });
+  displayMessages(relevantMessages);
+};
+
+//works out whether the messages are incoming or outgoing and displays them on the messages-show div
+var displayMessages = function (messages) {
+    $('.messages-show').html('');
+    _.each(messages, function (msg) {
+      var $msgToShow = $('<div/>').html('<p>'+msg.content+'</p>');
+      if (msg.user_id === msgVars.userID) {   //ie, is a sent message
+        $msgToShow.addClass('msg-outgoing');
+      } else {
+        $msgToShow.addClass('msg-incoming');
+      };
+      $('.messages-show').append($msgToShow);
+    });
+};

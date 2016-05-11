@@ -24,6 +24,10 @@
   border-radius: 5px 0 0 5px;
 }
 
+.chat-head:hover {
+  cursor: pointer;
+}
+
 .chat-inner {
   margin: 0;
 }
@@ -45,9 +49,54 @@
 }
 
 
-.message-display {
+.messages-box {
   display: inline-block;
   width: 69%;
   height: 100%;
   background: green;
+  vertical-align: top;
+}
+
+.messages-show {
+  width: 100%;
+  background: rebeccapurple;
+  height: 75%;
+}
+
+.message-input {
+  background: gainsboro;
+  height: 25%;
+}
+
+.input-box {
+  background: salmon;
+  width: 75%;
+  height: 100%;
+  display: inline-block;
+}
+
+.message-buttons {
+  vertical-align: top;
+  display: inline-block;
+  height: 100%;
+  width: 24%;
+  background: pink;
+}
+
+.message-button {
+  display: inline-block;
+  height: 50%;
+  width: 100%;
+  background: yellow;
+}
+
+.message-button p {
+  margin: 0 auto;
+}
+
+msg-incoming, msg-outgoing {
+  margin: 5px 5px 0 5px;
+  background: orange;
+  font-size: 1.5em;
+  
 }
