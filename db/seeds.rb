@@ -7,7 +7,7 @@ u4 = User.create :first => 'Nick', :last => 'Cage', :password => 'chicken', :ema
 
 Message.destroy_all
 
-m1 = Message.create :user_id => u1.id, :target => u2.id, :format => 'text', :seen => false, :content => 'sam to bill'
-m2 = Message.create :user_id => u1.id, :target => u4.id, :format => 'text', :seen => false, :content => 'sam to nick'
-m3 = Message.create :user_id => u2.id, :target => u4.id, :format => 'text', :seen => false, :content => 'bill to nick'
-m4 = Message.create :user_id => u2.id, :target => u1.id, :format => 'text', :seen => false, :content => 'bill to sam'
+m1 = Message.create :user_id => u1.id, :target => u2.id, :format => 'text', :seen => false, :content => 'Hi Bill, this is Sam!'
+m2 = Message.create :user_id => u1.id, :target => u4.id, :format => 'text', :seen => false, :content => 'Hi Nick, this is a message from Sam. I hope you enjoy reading it :D'
+m3 = Message.create :user_id => u2.id, :target => u4.id, :format => 'text', :seen => false, :content => 'Hi Nick, this is Bill Murray. For relaxing times, make it a Santori time.'
+m4 = Message.create :user_id => u2.id, :target => u1.id, :format => 'text', :seen => false, :content => 'Hey Sam, have you seen my favourite movie, Garfield?'
