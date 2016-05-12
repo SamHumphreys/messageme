@@ -4,8 +4,9 @@ class WsController < WebsocketRails::BaseController
 
   def inital_transmit
     if @current_user.present?
-      WebsocketRails[:user_id].trigger(:user, @current_user.id)
       WebsocketRails.users[@current_user.id] = connection
+      WebsocketRails.users[@current_user.id].send_message('user_id', @current_user.id)
+      WebsocketRails[:user_id].trigger(:user, @current_user.id)
       get_all_messages(@current_user)
       get_all_users(@current_user)
     end

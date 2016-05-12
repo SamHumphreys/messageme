@@ -15,10 +15,8 @@ $(document).ready(function () {
   };
 
   //gets own userID on page refresh
-  var channel = dispatcher.subscribe('user_id');
-  channel.bind('user', function(id){
+  dispatcher.bind('user_id', function (id) {
     msgVars.userID = id;
-    console.log(id);
     listen_for_messages();
   });
 
