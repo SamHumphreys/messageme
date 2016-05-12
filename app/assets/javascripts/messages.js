@@ -65,6 +65,9 @@ $(document).ready(function () {
     chatHeadListener: function () {
       $('.chat-head').on('click', function () {
         msgVars.chatFocus = Number($(this).attr('data'));
+        $('.chat-head').css('background', '#2eb5b8');
+        $('#new-message').attr('disabled', false).focus();
+        $(this).css('background', '#beeeef');
         filterMessages(msgVars.messages, msgVars.chatFocus);
       });
     },
@@ -98,14 +101,16 @@ $(document).ready(function () {
   var displayMessages = function (messages) {
       $('.messages-show').html('');
       _.each(messages, function (msg) {
-        var $messageContent = $('<p/>').addClass('message-content').text(msg.content);
-        var $messageLine = $('<div/>').addClass('message-line').append($messageContent);
+        var $messageContent = $('<div/>').addClass('message-content');
+        $('<p/>').addClass('msg-text').text(msg.content).appendTo($messageContent);
+        // var $messageContent = $('<p/>').addClass('message-content').text(msg.content);
+        // var $messageLine = $('<div/>').addClass('message-line').append($messageContent);
         if (msg.user_id === msgVars.userID) {   //ie, is a sent message
           $messageContent.addClass('msg-outgoing');
         } else {
           $messageContent.addClass('msg-incoming');
         };
-        $('.messages-show').append($messageLine);
+        $('.messages-show').append($messageContent);
       });
       $('.messages-show').scrollTop($('.messages-show')[0].scrollHeight);
   };

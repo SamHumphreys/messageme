@@ -5,14 +5,13 @@
   border-radius: 5px;
   box-shadow: 4px 4px 4px;
   position: relative;
-  padding: 5px;
+  padding: 5px 0 5px 5px;
 }
 
 .contacts {
   display: inline-block;
   height: 100%;
   width: 30%;
-  background: red;
   overflow: scroll;
 }
 
@@ -20,8 +19,8 @@
   height: 60px;
   margin-bottom: 5px;
   width: 100%;
-  background: blue;
   border-radius: 5px 0 0 5px;
+  background: #2eb5b8;
 }
 
 .chat-head:hover {
@@ -53,50 +52,64 @@
   display: inline-block;
   width: 69%;
   height: 100%;
-  background: green;
+  /*background: green;*/
   vertical-align: top;
 }
 
 .messages-show {
   width: 100%;
-  background: rebeccapurple;
+  background: #beeeef;
   height: 75%;
   overflow: scroll;
+  margin-bottom: 5px;
+  border-radius: 0 5px 5px 0;
 }
 
 .message-input {
-  background: gainsboro;
+  position: relative;
+  /*background: gainsboro;*/
   height: 25%;
+  width: 100%;
 }
 
-.input-box {
-  background: salmon;
-  width: 75%;
-  height: 100%;
+#new-message {
+  position: absolute;
   display: inline-block;
+  left: 0;
+  width: 74%;
+  height: 87%;
 }
 
 .message-buttons {
+  position: absolute;
+  right: 0;
   vertical-align: top;
   display: inline-block;
   height: 100%;
   width: 24%;
-  background: pink;
 }
 
 .message-button {
-  display: inline-block;
-  height: 50%;
+  position: absolute;
+  right: 0;
+  height: 41%;
   width: 100%;
   background: yellow;
+  border-radius: 5px;
+}
+
+.send-message {
+  top: 0;
+}
+
+.upload-image {
+  bottom: 5px;
 }
 
 .message-button p {
-  margin: 0 auto;
-}
-
-.message-line {
-  width: 100%;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 1em;
 }
 
 .msg-incoming, .msg-outgoing {
@@ -105,17 +118,20 @@
   font-size: 1.5em;
   border-radius: 5px;
   max-width: 80%;
-  position: relative;
-  display: inline-block;
-  padding: .5em;
 }
 
 .msg-incoming {
+  float: left;
   width: 65%;
-  margin-right: 35%;
+  margin-left: 5px;
 }
 
 .msg-outgoing {
+  float: right;
+  margin-right: 5px;
   width: 65%;
-  margin-left: 35%;
+}
+
+.msg-text {
+  margin: .5em;
 }
