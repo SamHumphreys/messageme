@@ -47,6 +47,11 @@ class WsController < WebsocketRails::BaseController
     end
   end
 
+  def mark_as_read
+    msg_to_update = Message.find(message)
+    msg_to_update.update :seen => true
+  end
+
   def goodbye
   end
 
