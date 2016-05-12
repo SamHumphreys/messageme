@@ -2,7 +2,8 @@ var msgVars = {
   userID: 0,
   connection: '',
   chatFocus: 0,
-  messages: []
+  messages: [],
+  unreadConversations
 }
 
 $(document).ready(function () {
@@ -65,9 +66,11 @@ $(document).ready(function () {
     chatHeadListener: function () {
       $('.chat-head').on('click', function () {
         msgVars.chatFocus = Number($(this).attr('data'));
-        $('.chat-head').css('background', '#2eb5b8');
+        $(this).prependTo($('.contacts'));
+        $('.contacts').scrollTop(0);
+        $('.chat-head').css('background', '#1f797a');
         $('#new-message').attr('disabled', false).focus();
-        $(this).css('background', '#beeeef');
+        $(this).css('background', '#33c9cc');
         filterMessages(msgVars.messages, msgVars.chatFocus);
       });
     },
@@ -103,8 +106,6 @@ $(document).ready(function () {
       _.each(messages, function (msg) {
         var $messageContent = $('<div/>').addClass('message-content');
         $('<p/>').addClass('msg-text').text(msg.content).appendTo($messageContent);
-        // var $messageContent = $('<p/>').addClass('message-content').text(msg.content);
-        // var $messageLine = $('<div/>').addClass('message-line').append($messageContent);
         if (msg.user_id === msgVars.userID) {   //ie, is a sent message
           $messageContent.addClass('msg-outgoing');
         } else {

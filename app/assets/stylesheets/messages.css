@@ -12,15 +12,17 @@
   display: inline-block;
   height: 100%;
   width: 30%;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: auto;
 }
 
 .chat-head {
+  position: relative;
   height: 60px;
   margin-bottom: 5px;
   width: 100%;
   border-radius: 5px 0 0 5px;
-  background: #2eb5b8;
+  background: #1f797a;
 }
 
 .chat-head:hover {
@@ -58,7 +60,7 @@
 
 .messages-show {
   width: 100%;
-  background: #beeeef;
+  background: #33c9cc;
   height: 75%;
   overflow: scroll;
   margin-bottom: 5px;
@@ -107,7 +109,7 @@
 }
 
 .message-button p {
-  margin-top: 15px;
+  margin-top: 14px;
   text-align: center;
   font-size: 1em;
 }
