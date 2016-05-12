@@ -16,7 +16,6 @@ $(document).ready(function () {
 
   //gets own userID on page refresh
   dispatcher.bind('user_id', function (id) {
-    console.log(id);
     msgVars.userID = id;
     listen_for_messages();
   });
@@ -30,9 +29,10 @@ $(document).ready(function () {
   var listen_for_messages = function () {
     var listen_channel = dispatcher.subscribe(msgVars.userID.toString());
     listen_channel.bind('msg_update', function (msg) {
-      console.log('new update');
       msgVars.messages.push(msg);
-      displayMessages(msgVars.messages);
+      if (msg.user_id === msgVars.chatFocus || msg.target === msgVars.chatFocus) {
+        filterMessages(msgVars.messages, msgVars.chatFocus);
+      };
     });
   };
 
@@ -80,6 +80,7 @@ $(document).ready(function () {
             seen: false
           };
           sendMessage(messageToSend);
+          $('#new-message').val('').focus();
         };
       });
     }
