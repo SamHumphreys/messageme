@@ -9,14 +9,12 @@
 
       <div class="message-input">
           <%= text_area_tag 'new-message', '', {placeholder: 'Enter message here', disabled: 'disabled'} %>
-        <div class="message-buttons">
-          <div class="message-button send-message">
-            <p>Send Message</p>
-          </div>
-          <div class="message-button upload-image">
-            <p>Send Image</p>
-          </div>
-        </div>
+          <%= button_tag "Howl at the Mooooon", :class => 'send-message', :disabled => true %>
+        <% #<div class="message-buttons"> %>
+          <% #<div class="message-button send-message"> %>
+            <% #<p>Send Message</p> %>
+          <% #</div> %>
+          <% #</div> %>
       </div>
     </div>
 

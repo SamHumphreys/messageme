@@ -1,13 +1,14 @@
-var msgVars = {
-  userID: 0,
-  connection: '',
-  chatFocus: 0,
-  messages: [],
-  unread: [],
-  unreadCount: 0
-}
-
 $(document).ready(function () {
+
+  var msgVars = {
+    userID: 0,
+    connection: '',
+    chatFocus: 0,
+    messages: [],
+    unread: [],
+    unreadCount: 0
+  };
+
 
   //creates a websocket connection
   var dispatcher = new WebSocketRails(window.location.host + '/websocket');
@@ -55,13 +56,11 @@ $(document).ready(function () {
   var listenForMessages = function () {
     var listen_channel = dispatcher.subscribe(msgVars.userID.toString());
     listen_channel.bind('msg_update', function (msg) {
-
       msgVars.messages.push(msg);
       if (msg.user_id !== msgVars.userID) {
         msgVars.unreadCount++;
         msgVars.unread.push(msg.user_id)
       };
-
       if (msg.user_id === msgVars.chatFocus || msg.target === msgVars.chatFocus) {
         filterMessages(msgVars.messages, msgVars.chatFocus);
       } else {
@@ -107,7 +106,6 @@ $(document).ready(function () {
 
   var displayContacts = function (users) {
     _.each(users, function (user) {
-
       var $chatHead = $('<div/>').addClass('chat-head').attr('data', user.id);
       var $chatInner = $('<p/>').addClass('chat-inner').appendTo($chatHead);
       var $chatImg = $('<img>').attr({src: user.image,
@@ -118,6 +116,7 @@ $(document).ready(function () {
       clickListen.chatHeadListener($chatHead);
     });
     clickListen.sendMessageListener();
+    clickListen.sendMessageOnEnter();
   };
 
 
@@ -150,6 +149,21 @@ $(document).ready(function () {
     updateUnread();
   };
 
+  var getMessageReady = function () {
+    var msgText = $('#new-message').val();
+    if (msgVars.chatFocus !== 0 && msgText !== '') {
+      var messageToSend = {
+        user_id: msgVars.userID,
+        target: msgVars.chatFocus,
+        format: 'text',
+        content: msgText,
+        seen: false
+      };
+      sendMessage(messageToSend);
+      $('#new-message').val('').focus();
+    };
+  };
+
 
   var clickListen = {
     chatHeadListener: function ($chatHead) {
@@ -159,30 +173,26 @@ $(document).ready(function () {
           return unreadID === msgVars.chatFocus;
         });
         $('.contacts').prepend($(this));
-        // $(this).prependTo($('.contacts'));
         $('.contacts').scrollTop(0);
         $('.chat-head').css('background', '#1f797a');
         $('#new-message').attr('disabled', false).focus();
+        $('.send-message').attr('disabled', false);
         $(this).css('background', '#33c9cc');
         filterMessages(msgVars.messages, msgVars.chatFocus);
       });
     },
     sendMessageListener: function () {
       $('.send-message').on('click', function () {
-        var msgText = $('#new-message').val();
-        if (msgVars.chatFocus !== 0 && msgText !== '') {
-          var messageToSend = {
-            user_id: msgVars.userID,
-            target: msgVars.chatFocus,
-            format: 'text',
-            content: msgText,
-            seen: false
-          };
-          sendMessage(messageToSend);
-          $('#new-message').val('').focus();
+        getMessageReady();
+      });
+    },
+    sendMessageOnEnter: function () {
+      $('#new-message').on('keypress', function (e) {
+        if (e.keyCode === 13) {
+          e.preventDefault();
+          getMessageReady();
         };
       });
     }
   };
-
 });

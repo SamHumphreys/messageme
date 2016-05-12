@@ -69,7 +69,6 @@
 
 .message-input {
   position: relative;
-  /*background: gainsboro;*/
   height: 25%;
   width: 100%;
 }
@@ -79,39 +78,22 @@
   display: inline-block;
   left: 0;
   width: 74%;
-  height: 87%;
-}
-
-.message-buttons {
-  position: absolute;
-  right: 0;
-  vertical-align: top;
-  display: inline-block;
-  height: 100%;
-  width: 24%;
-}
-
-.message-button {
-  position: absolute;
-  right: 0;
-  height: 41%;
-  width: 100%;
-  background: yellow;
-  border-radius: 5px;
+  height: 95%;
 }
 
 .send-message {
+  position: absolute;
+  padding: 0;
+  border: 0;
   top: 0;
+  right: 0;
+  height: 98%;
+  width: 24%;
+  border-radius: 5px;
 }
 
-.upload-image {
-  bottom: 5px;
-}
-
-.message-button p {
-  margin-top: 14px;
-  text-align: center;
-  font-size: 1em;
+.send-message:hover {
+  cursor: pointer;
 }
 
 .msg-incoming, .msg-outgoing {
