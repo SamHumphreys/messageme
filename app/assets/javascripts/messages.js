@@ -16,6 +16,7 @@ $(document).ready(function () {
 
   //gets own userID on page refresh
   dispatcher.bind('user_id', function (id) {
+    console.log(id);
     msgVars.userID = id;
     listen_for_messages();
   });
