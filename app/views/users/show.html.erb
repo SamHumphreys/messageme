@@ -1,3 +1,6 @@
+<%= link_to 'Home', root_path %>
+
+
 <% if @current_user == @user %>
   <h1>Hi <%= @user.first %>. Here are your details.</h1>
   <%= image_tag @user.image, :class => 'profile-pic' %>

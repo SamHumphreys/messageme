@@ -1,5 +1,8 @@
 <h1>All users</h1>
 
+<%= link_to 'Home', root_path %>
+
+
 <% @users.each do |user| %>
   <p>User ID <%= user.id %>,
     <%= user.first + ' ' + user.last %>
