@@ -18,20 +18,17 @@ $(document).ready(function () {
 
   //gets own userID on page refresh
   dispatcher.bind('user_id', function (id) {
-    console.log('receives id', id);
     msgVars.userID = id;
   });
 
   //gets all other users and creates a contacts list
   dispatcher.bind('users', function (users) {
-    console.log('get users', users);
     displayContacts(users);
     updateUnread();
   });
 
   //receives all messages on page reset
   dispatcher.bind('messages', function (messages) {
-    console.log('recieved all messages', messages);
     msgVars.messages = _.sortBy(messages, 'id');
     _.each(messages, function (msg) {
       if (msg.seen !== true && msg.target === msgVars.userID) {
@@ -41,22 +38,29 @@ $(document).ready(function () {
     });
     msgVars.unread = _.uniq(msgVars.unread).sort();
     listenForMessages();
+    listenForNewUsers();
   });
+
+  //listens for new users generated and adds them to chat list
+  var listenForNewUsers = function () {
+    var newUserChannel = dispatcher.subscribe('user_create');
+    newUserChannel.bind('created_user', function (user) {
+      var newUser = [];
+      newUser.push(user);
+      displayContacts(newUser);
+    });
+  };
 
   //listen to new messages sent to your user ID when the database updates
   var listenForMessages = function () {
-    console.log('listenForMessages');
     var listen_channel = dispatcher.subscribe(msgVars.userID.toString());
     listen_channel.bind('msg_update', function (msg) {
-      console.log('new message received', msg);
 
-      console.log('**',msgVars.unreadCount, msgVars.unread);
       msgVars.messages.push(msg);
       if (msg.user_id !== msgVars.userID) {
         msgVars.unreadCount++;
         msgVars.unread.push(msg.user_id)
       };
-      console.log('**',msgVars.unreadCount, msgVars.unread);
 
       if (msg.user_id === msgVars.chatFocus || msg.target === msgVars.chatFocus) {
         filterMessages(msgVars.messages, msgVars.chatFocus);
@@ -68,13 +72,11 @@ $(document).ready(function () {
 
   //send a message to the database
   var sendMessage = function (message) {
-    console.log('sendMessage', message);
     dispatcher.trigger('new_message', message);
   };
 
   //tells the server that a message has been rendered
   var markAsRead = function (msgID) {
-    console.log('markAsRead');
     dispatcher.trigger('mark_as_read', msgID);
     if (msgVars.unreadCount > 0) {
       msgVars.unreadCount --;
@@ -82,7 +84,6 @@ $(document).ready(function () {
   };
 
   var updateUnread = function () {
-    console.log('updateUnread');
     //update Message button to show unread messages
     var $msgButton = $('.messages');
     if(msgVars.unreadCount > 0) {
@@ -105,8 +106,8 @@ $(document).ready(function () {
 
 
   var displayContacts = function (users) {
-    console.log('displayContacts', users);
     _.each(users, function (user) {
+
       var $chatHead = $('<div/>').addClass('chat-head').attr('data', user.id);
       var $chatInner = $('<p/>').addClass('chat-inner').appendTo($chatHead);
       var $chatImg = $('<img>').attr({src: user.image,
@@ -114,8 +115,8 @@ $(document).ready(function () {
                                     }).appendTo($chatInner);
       var $chatName = $('<p/>').text(user.name).addClass('chat-name').appendTo($chatInner);
       $('.contacts').append($chatHead);
+      clickListen.chatHeadListener($chatHead);
     });
-    clickListen.chatHeadListener();
     clickListen.sendMessageListener();
   };
 
@@ -123,7 +124,6 @@ $(document).ready(function () {
 
   //creates a list of messages to or from the clicked on chat head and passes the list on to displayMessages
   var filterMessages = function (messages, convoPal) {
-    console.log('filterMessages', messages, convoPal);
     var relevantMessages = _.filter(messages, function(msg) {
       return (msg.user_id === convoPal) || (msg.target === convoPal)
     });
@@ -132,7 +132,6 @@ $(document).ready(function () {
 
   //works out whether the messages are incoming or outgoing and displays them on the messages-show div
   var displayMessages = function (messages) {
-    console.log('displayMessages', messages);
     $('.messages-show').html('');
     _.each(messages, function (msg) {
       if (msg.seen !== true && msg.target === msgVars.userID) {
@@ -153,14 +152,14 @@ $(document).ready(function () {
 
 
   var clickListen = {
-    chatHeadListener: function () {
-      console.log('chatHeadListener');
-      $('.chat-head').on('click', function () {
+    chatHeadListener: function ($chatHead) {
+      $chatHead.on('click', function () {
         msgVars.chatFocus = Number($(this).attr('data'));
         msgVars.unread = _.reject(msgVars.unread, function (unreadID) {
           return unreadID === msgVars.chatFocus;
         });
-        $(this).prependTo($('.contacts'));
+        $('.contacts').prepend($(this));
+        // $(this).prependTo($('.contacts'));
         $('.contacts').scrollTop(0);
         $('.chat-head').css('background', '#1f797a');
         $('#new-message').attr('disabled', false).focus();
@@ -169,7 +168,6 @@ $(document).ready(function () {
       });
     },
     sendMessageListener: function () {
-      console.log('sendMessageListener');
       $('.send-message').on('click', function () {
         var msgText = $('#new-message').val();
         if (msgVars.chatFocus !== 0 && msgText !== '') {

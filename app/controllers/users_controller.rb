@@ -18,8 +18,12 @@ class UsersController < ApplicationController
     end
 
     if @user.save
+      new_user = {id: @user.id,
+                  name: @user.first + ' ' + @user.last[0],
+                  image: @user.image}
+      WebsocketRails[:user_create].trigger('created_user', new_user)
       session[:user_id] = @user.id
-      redirect_to root_path
+      redirect_to messages_path
     else
       render :new
     end
