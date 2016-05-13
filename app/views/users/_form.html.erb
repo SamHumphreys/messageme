@@ -12,23 +12,31 @@
     </div>
   <% end %>
 
-  <%= f.label :email %>
-  <%= f.email_field :email, :required => true, :autofocus => true %>
-
-  <%= f.label :first, 'First name' %>
-  <%= f.text_field :first, :required => true %>
-
-  <%= f.label :last, 'Surname' %>
-  <%= f.text_field :last, :required => true %>
-
-  <%= f.label :password %><br>
-  <%= f.password_field :password, :required => (true unless @current_user.present?) %>
-
-  <%= f.label :password_confirmation %><br>
-  <%= f.password_field :password_confirmation, :required => (true unless @current_user.present?) %>
-
-  <%= f.label :image, 'Upload profile picture' %>
-  <%= f.file_field :image %>
-
-  <%= f.submit %>
+  <div>
+    <%= f.label :email %>
+    <%= f.email_field :email, :required => true, :autofocus => true %>
+  </div>
+  <div>
+    <%= f.label :first, 'First name' %>
+    <%= f.text_field :first, :required => true %>
+  </div>
+  <div>
+    <%= f.label :last, 'Surname' %>
+    <%= f.text_field :last, :required => true %>
+  </div>
+  <div>
+    <%= f.label :password %><br>
+    <%= f.password_field :password, :required => (true unless @current_user.present?) %>
+  </div>
+  <div>
+    <%= f.label :password_confirmation %><br>
+    <%= f.password_field :password_confirmation, :required => (true unless @current_user.present?) %>
+  </div>
+  <div>
+    <%= f.label :image, 'Upload profile picture' %>
+    <%= f.file_field :image %>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
 <% end %>
