@@ -14,7 +14,7 @@ $(document).ready(function () {
   var dispatcher = new WebSocketRails(window.location.host + '/websocket');
   dispatcher.on_open = function (data) {
     msgVars.connection = data.connection_id;
-    dispatcher.trigger('login', 'I am logged in meow');
+    dispatcher.trigger('login', 'I am logged in now');
   };
 
   //gets own userID on page refresh
