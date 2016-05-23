@@ -59,3 +59,26 @@
 .navbar .profile:hover {
   left: 324px;
 }
+
+@media (max-width: 960px) {
+  .navbar {
+    height: 90px;
+  }
+  .navbar .button {
+    position: relative;
+    display: block;
+    height: 30px;
+    font-size: 1em;
+    margin-top: 3px;
+    width: 100%;
+    border-radius: 0;
+    left: 0;
+  }
+
+  .navbar .button:hover{
+    left: 1px;
+  }
+
+
+
+}

@@ -46,8 +46,6 @@
   margin: 5px 0 0 15px;
 }
 
-
-
 .banner {
   margin: 0 auto;
   background: #beeeef;
@@ -76,4 +74,36 @@
 
 .banner .right .banner-image {
   height: 120px;
+}
+
+@media (max-width: 960px) {
+  .title {
+    margin: 0;
+    border-radius: 0;
+    height: 130px;
+  }
+  .title .left .top {
+    display: none;
+  }
+
+  .title .left {
+    width: 100%;
+    font-size: .5em;
+  }
+
+  .title .right {
+    display: none;
+  }
+
+  .banner {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+  }
+  .banner .right {
+    display: none;
+  }
+  .banner .left {
+    width: 100%;
+  }
 }
